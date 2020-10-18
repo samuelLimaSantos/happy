@@ -23,6 +23,12 @@ export const Form = styled.form`
     border: 0;
   }
 
+  .leaflet-container {
+    margin-bottom: 40px;
+    border: 1px solid #d3e2e5;
+    border-radius: 20px;
+  }
+
   fieldset + fieldset {
     margin-top: 80px;
   }
@@ -81,13 +87,50 @@ export const Form = styled.form`
     line-height: 28px;
   }
 
-  .input-block .new-image {
+  .input-block .images-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 16px;
+  }
+
+  .input-block .unique-image-container {
+    position: relative;
+  }
+
+  .input-block .images-container img {
     width: 100%;
-    height: 64px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid #d3e2e5;
+  }
+
+  .input-block .images-container .delete-image-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 0 20px 0 20px;
+    border: 1px solid #d3e2e5;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .input-block input[type='file'] {
+    display: none;
+  }
+
+  .input-block .new-image {
+    height: 96px;
     background: #f5f8fa;
     border: 1px dashed #96d2f0;
     border-radius: 20px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .input-block .button-select {
@@ -101,6 +144,7 @@ export const Form = styled.form`
     border: 1px solid #d3e2e5;
     color: #5c8599;
     cursor: pointer;
+    outline: none;
   }
 
   .input-block .button-select button.active {
@@ -135,6 +179,7 @@ export const Form = styled.form`
     align-items: center;
 
     transition: background-color 0.2s;
+    outline: none;
   }
 
   button.confirm-button svg {

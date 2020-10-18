@@ -32,6 +32,7 @@ export const SideBar = styled.aside`
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: none;
   }
 
   footer a:hover,
