@@ -9,46 +9,6 @@ export const Container = styled.div`
   }
 `;
 
-export const SideBar = styled.aside`
-  position: fixed;
-  height: 100%;
-  padding: 32px 24px;
-  background: linear-gradient(329.54deg, #15b6d6 0%, #15d6d6 100%);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  img {
-    width: 48px;
-  }
-
-  footer a,
-  footer button {
-    width: 48px;
-    height: 48px;
-
-    border: 0;
-
-    background: #12afcb;
-    border-radius: 16px;
-
-    cursor: pointer;
-
-    transition: background-color 0.2s;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  footer a:hover,
-  footer button:hover {
-    background: #17d6eb;
-  }
-`;
-
 export const OrphanageDetails = styled.div`
   width: 700px;
   margin: 64px auto;
@@ -178,6 +138,12 @@ export const OrphanageDetails = styled.div`
     background: linear-gradient(154.16deg, #edfff6 7.85%, #ffffff 91.03%);
     border: 1px solid #a1e9c5;
     color: #37c77f;
+  }
+
+  .orphanage-details-content .open-details div.open-on-weekends.dont-open {
+    background: linear-gradient(154.16deg, #fdf0f5 7.85%, #ffffff 91.03%);
+    border: 1px solid #ffbcd4;
+    color: #ff669d;
   }
 
   .orphanage-details-content button.contact-button {

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiPlus, FiArrowRight } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import Leaflet from 'leaflet';
 import mapMarkerImg from '../../assets/marker.svg';
+import mapIcon from '../../utils/mapIcon';
+import api from '../../services/api';
 import {
   Container,
   SideBar,
@@ -11,14 +12,26 @@ import {
 } from './styles';
 import 'leaflet/dist/leaflet.css';
 
-const mapIcon = Leaflet.icon({
-  iconUrl: mapMarkerImg,
-  iconSize: [58, 68],
-  iconAnchor: [29, 68],
-  popupAnchor: [170, 2],
-});
+interface Orphanage {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+}
 
 const OrphanagesMap: React.FC = () => {
+  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+
+  useEffect(() => {
+    (async function requisition() {
+      const response = await api.get('/orphanages');
+      const { data } = response;
+
+      console.log(data);
+      setOrphanages(data);
+    })();
+  }, []);
+
   return (
     <Container>
       <SideBar>
@@ -49,14 +62,20 @@ const OrphanagesMap: React.FC = () => {
           url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
         />
 
-        <Marker position={[-7.9974, -34.8731]} icon={mapIcon}>
-          <Popup closeButton={false} minWidth={240} maxWidth={24}>
-            Lar das meninas
-            <MoreDetailsButton to="/orphanages/1">
-              <FiArrowRight size={20} color="#fff" />
-            </MoreDetailsButton>
-          </Popup>
-        </Marker>
+        {orphanages.map(orphanage => (
+          <Marker
+            position={[orphanage.latitude, orphanage.longitude]}
+            icon={mapIcon}
+            key={orphanage.id}
+          >
+            <Popup closeButton={false} minWidth={240} maxWidth={24}>
+              {orphanage.name}
+              <MoreDetailsButton to={`/orphanages/${orphanage.id}`}>
+                <FiArrowRight size={20} color="#fff" />
+              </MoreDetailsButton>
+            </Popup>
+          </Marker>
+        ))}
       </Map>
 
       <CreateOrphanageButton to="/orphanages/create">
