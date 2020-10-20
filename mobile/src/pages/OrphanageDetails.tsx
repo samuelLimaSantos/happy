@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Image,
   View,
@@ -7,11 +7,12 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  Linking,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import mapMarkerImg from '../images/map-marker.png';
 import api from '../services/api';
 
@@ -40,6 +41,12 @@ export default function OrphanageDetails() {
   const { id } = route.params as OrphanageDetailsRouteParams;
 
   const [orphanage, setOrphanage] = useState<Orphanage>();
+
+  const handleOpenGoogleMapRoutes = useCallback(() => {
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${orphanage?.latitude},${orphanage?.longitude}`,
+    );
+  }, []);
 
   useEffect(() => {
     api.get(`/orphanages/${id}`).then(response => setOrphanage(response.data));
@@ -96,9 +103,12 @@ export default function OrphanageDetails() {
             />
           </MapView>
 
-          <View style={styles.routesContainer}>
+          <TouchableOpacity
+            onPress={handleOpenGoogleMapRoutes}
+            style={styles.routesContainer}
+          >
             <Text style={styles.routesText}>Ver rotas no Google Maps</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.separator} />
